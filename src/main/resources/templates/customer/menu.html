@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Menu</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Vendor</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.name}">Item Name</td>
+                    <td th:text="${item.price}">Price</td>
+                    <td th:text="${item.vendor != null ? item.vendor.username : 'No Vendor'}">Vendor Name</td>
+                    <td>
+					    <a th:if="${item.vendor != null}"
+					       th:href="@{/order/placeOrder(customerId=${customerId}, vendorId=${item.vendor.id}, itemId=${item.id})}" 
+					       class="btn btn-primary">
+					        Place Order
+					    </a>
+					    <span th:if="${item.vendor == null}">Not Available</span>
+					</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Vendor Dashboard</h2>
+
+        <h3>Menu Items</h3>
+        <form action="/vendor/addItem">
+            <button type="submit" class="btn btn-primary">Add Item</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.price}"></td>
+                    <td>
+                        <!-- Form for updating the item -->
+                        <form action="/vendor/updateItem" method="post">
+                            <input type="hidden" name="itemId" th:value="${item.id}">
+                            <div class="form-group">
+                                <label for="name">Item Name</label>
+                                <input type="text" class="form-control" id="name" name="name" th:value="${item.name}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" id="price" name="price" th:value="${item.price}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Item</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Order History</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.customer.username}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="item : ${order.items}" th:text="${item.name}"></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Place Order</h2>
+<form th:action="@{/order/placeOrder}" method="post">
+    <!-- Dynamically set customer ID -->
+    <input type="hidden" name="customerId" th:value="${customerId}">
+
+    <!-- Dynamically set vendor ID -->
+    <input type="hidden" name="vendorId" th:value="${vendorId}"> <!-- Ensure vendorId is populated -->
+
+    <div class="form-group">
+        <label for="items">Select Items</label>
+        <!-- Loop through items and display them as options -->
+        <select multiple class="form-control" id="items" name="itemIds">
+            <option th:each="item : ${items}" th:value="${item.id}" th:text="${item.name}"></option>
+        </select>
+        <small class="form-text text-muted">Hold down the Ctrl (Windows) or Command (Mac) button to select multiple items.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Place Order</button>
+</form>
+
+    </div>
+</body>
+</html>
